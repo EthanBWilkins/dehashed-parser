@@ -25,7 +25,7 @@ def call_api(email, key, search, custom=False):
     header = {'Accept': 'application/json'}
     response = requests.get(URL, auth=HTTPBasicAuth(email, key), params=query_params, headers=header)
     if response.status_code == 200:
-        print(f"[+] API call succeeded. Response size: {len(response.json())}")
+        print(f"[+] API call succeeded.")
         return response.json()
     elif response.status_code == 401:
         print("[-] Invalid API credentials. Exiting!")
