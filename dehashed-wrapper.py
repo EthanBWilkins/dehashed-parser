@@ -25,7 +25,7 @@ def call_api(email, key, search, custom=False):
     header = {'Accept': 'application/json'}
     response = requests.get(URL, auth=HTTPBasicAuth(email, key), params=query_params, headers=header)
     if response.status_code == 200:
-        print("[+] API call succeeded.")
+        print(f"[+] API call succeeded. Response size: {len(response.json())}")
         return response.json()
     elif response.status_code == 401:
         print("[-] Invalid API credentials. Exiting!")
@@ -42,7 +42,9 @@ def call_api(email, key, search, custom=False):
 def parse_api_response_euph(api_response_data, unique_users=False, unique_emails=False):
     entries = api_response_data["entries"]
     # print(f"[DEBUG] length of entries is {len(entries)}")
-
+    if len(entries) == 0:
+        print("[-] No Results!")
+        exit()
     # Preliminary: fill usernames in from email addresses where needed
     for e in entries:
         if e["email"] and e["username"] == '':
